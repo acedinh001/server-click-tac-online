@@ -12,7 +12,7 @@ class SettingModel(db.Model):
     time_search_max = db.Column(db.Integer, unique=False, nullable=False)
     time_onpage_min = db.Column(db.Integer, unique=False, nullable=False)
     time_onpage_max = db.Column(db.Integer, unique=False, nullable=False)
-    exclude_domains = db.Column(db.String(80), unique=False, nullable=False)
+    mail_ratio = db.Column(db.Integer, unique=False, nullable=True)
     ads_char = db.Column(db.String(80), unique=False, nullable=False)
     proxy_name = db.Column(db.String(80), unique=False, nullable=False)
     isKeyword1 = db.Column(db.Boolean, unique=False, nullable=False)

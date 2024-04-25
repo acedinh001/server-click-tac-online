@@ -3,7 +3,7 @@ from flask_smorest import Blueprint, abort
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
 from db import db
-from models import ProfileModel, SettingModel, DeviceModel, KeywordModel
+from models import ProfileModel, SettingModel, DeviceModel, KeywordModel, DomainModel
 from schemas import ProfileSchema
 
 blp = Blueprint("Profiles", __name__, description="Operations in profiles")
@@ -36,6 +36,10 @@ class ProfileReset(MethodView):
             devices = DeviceModel.query.filter_by(profile_id=profile_id).all()
             for device in devices:
                 db.session.delete(device)
+                db.session.commit()
+            domains = DomainModel.query.filter_by(profile_id=profile_id).all()
+            for domain in domains:
+                db.session.delete(domain)
                 db.session.commit()
             return {"message": "Profile reset successfully"}
         except SQLAlchemyError:

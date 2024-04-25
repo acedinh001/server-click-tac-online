@@ -18,7 +18,7 @@ class PlainSettingSchema(Schema):
     time_search_max = fields.Int()
     time_onpage_min = fields.Int()
     time_onpage_max = fields.Int()
-    exclude_domains = fields.Str()
+    mail_ratio = fields.Int()
     ads_char = fields.Str()
     proxy_name = fields.Str()
     isKeyword1 = fields.Bool()
