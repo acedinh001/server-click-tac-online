@@ -78,11 +78,16 @@ class PlainDeviceSchema(Schema):
     appium_port = fields.Int()
     system_port = fields.Int()
     key_proxy = fields.Str()
+    
+class PlainDomainSchema(Schema):
+    id = fields.Int(dump_only=True, autoincrement=True)
+    value = fields.Str()
 
 class ProfileSchema(PlainProfileSchema):
     settings = fields.Nested(PlainSettingSchema(), dump_only=True)
     devices = fields.List(fields.Nested(PlainDeviceSchema()), dump_only=True)
     keywords = fields.List(fields.Nested(PlainKeywordSchema()), dump_only=True)
+    domains = fields.List(fields.Nested(PlainDomainSchema()), dump_only=True)
     
 class SettingSchema(PlainSettingSchema):
     profile_id = fields.Int(required=True, load_only=True)
@@ -93,6 +98,10 @@ class DeviceSchema(PlainDeviceSchema):
     profile = fields.Nested(PlainProfileSchema(), dump_only=True)
     
 class KeywordSchema(PlainKeywordSchema):
+    profile_id = fields.Int(required=True, load_only=True)
+    profile = fields.Nested(PlainProfileSchema(), dump_only=True)
+    
+class DomainSchema(PlainDomainSchema):
     profile_id = fields.Int(required=True, load_only=True)
     profile = fields.Nested(PlainProfileSchema(), dump_only=True)
     

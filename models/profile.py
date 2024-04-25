@@ -10,3 +10,4 @@ class ProfileModel(db.Model):
     keywords = db.relationship("KeywordModel", back_populates="profile", cascade="all, delete")
     settings = db.relationship("SettingModel", back_populates="profile", cascade="all, delete", uselist=False)
     devices = db.relationship("DeviceModel", back_populates="profile", cascade="all, delete")
+    domains = db.relationship("DomainModel", back_populates="profile", cascade="all, delete")

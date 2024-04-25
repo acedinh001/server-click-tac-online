@@ -12,6 +12,7 @@ from resources.profile import blp as ProfileBlueprint
 from resources.setting import blp as SettingBlueprint
 from resources.device import blp as DeviceBlueprint
 from resources.keyword import blp as KeywordBlueprint
+from resources.domain import blp as DomainBlueprint
 
 def create_app(db_url=None):
     app = Flask(__name__)
@@ -37,5 +38,6 @@ def create_app(db_url=None):
     api.register_blueprint(SettingBlueprint, name="setting")
     api.register_blueprint(DeviceBlueprint, name="device")
     api.register_blueprint(KeywordBlueprint, name="keyword")
+    api.register_blueprint(DomainBlueprint, name="domain")
 
     return app
