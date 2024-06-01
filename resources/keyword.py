@@ -41,7 +41,7 @@ class KeywordList(MethodView):
 @blp.route("/keyword/profile/<int:profile_id>")
 class KeywordByProfile(MethodView):
     def delete(self, profile_id):
-        batch_size = 20  # Define the batch size
+        batch_size = 5  # Define the batch size
         try:
             while True:
                 keywords = KeywordModel.query.filter_by(profile_id=profile_id).limit(batch_size).all()
