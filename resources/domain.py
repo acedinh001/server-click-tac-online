@@ -39,3 +39,18 @@ class DomainList(MethodView):
         except SQLAlchemyError:
             abort(500, message="An error occurred while inserting the domain.")
         return domain
+
+@blp.route("/domain/profile/<int:profile_id>")
+class DomainByProfile(MethodView):
+    def delete(self, profile_id):
+        domains = DomainModel.query.filter_by(profile_id=profile_id).all()
+        if not domains:
+            abort(404, message="No domains found for the given profile ID.")
+        
+        try:
+            for domain in domains:
+                db.session.delete(domain)
+            db.session.commit()
+            return {"message": "Domains deleted."}
+        except SQLAlchemyError:
+            abort(500, message="An error occurred while deleting the domains.")

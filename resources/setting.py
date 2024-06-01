@@ -37,3 +37,18 @@ class SettingList(MethodView):
         except SQLAlchemyError:
             abort(500, message="An error occurred while inserting the setting.")
         return setting
+    
+@blp.route("/setting/profile/<int:profile_id>")
+class SettingByProfile(MethodView):
+    def delete(self, profile_id):
+        settings = SettingModel.query.filter_by(profile_id=profile_id).all()
+        if not settings:
+            abort(404, message="No settings found for the given profile ID.")
+        
+        try:
+            for setting in settings:
+                db.session.delete(setting)
+            db.session.commit()
+            return {"message": "Settings deleted."}
+        except SQLAlchemyError:
+            abort(500, message="An error occurred while deleting the settings.")

@@ -37,3 +37,18 @@ class DeviceList(MethodView):
         except SQLAlchemyError:
             abort(500, message="An error occurred while inserting the device.")
         return device
+    
+@blp.route("/device/profile/<int:profile_id>")
+class DeviceByProfile(MethodView):
+    def delete(self, profile_id):
+        devices = DeviceModel.query.filter_by(profile_id=profile_id).all()
+        if not devices:
+            abort(404, message="No devices found for the given profile ID.")
+        
+        try:
+            for device in devices:
+                db.session.delete(device)
+            db.session.commit()
+            return {"message": "Devices deleted."}
+        except SQLAlchemyError:
+            abort(500, message="An error occurred while deleting the devices.")

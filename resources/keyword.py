@@ -37,3 +37,18 @@ class KeywordList(MethodView):
         except SQLAlchemyError:
             abort(500, message="An error occurred while inserting the keyword.")
         return keyword
+    
+@blp.route("/keyword/profile/<int:profile_id>")
+class KeywordByProfile(MethodView):
+    def delete(self, profile_id):
+        keywords = KeywordModel.query.filter_by(profile_id=profile_id).all()
+        if not keywords:
+            abort(404, message="No keywords found for the given profile ID.")
+        
+        try:
+            for keyword in keywords:
+                db.session.delete(keyword)
+            db.session.commit()
+            return {"message": "Keywords deleted."}
+        except SQLAlchemyError:
+            abort(500, message="An error occurred while deleting the keywords.")
